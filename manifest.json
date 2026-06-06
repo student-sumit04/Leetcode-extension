@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "LeetCode AI Assistant",
+  "version": "1.0.0",
+  "description": "AI-powered LeetCode helper with real-time code analysis and optimization suggestions",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://leetcode.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://leetcode.com/problems/*"
+      ],
+      "js": [
+        "src/content/content.js"
+      ],
+      "css": [
+        "src/content/styles.css"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "LeetCode AI Assistant"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["public/inject.js"],
+      "matches": ["https://leetcode.com/*"]
+    }
+  ]
+}
