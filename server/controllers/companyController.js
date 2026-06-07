@@ -1,20 +1,50 @@
 const { companies, getCompaniesForProblem } = require('../models/Company');
+const { inferCompanyTagsWithGemini } = require('../utils/geminiService');
 
 const companyController = {
   /**
    * Get companies that asked a specific problem
    */
-  getCompaniesByProblem: (req, res) => {
+  getCompaniesByProblem: async (req, res) => {
     const { problemSlug } = req.params;
-    const { companies: problemCompanies, source } =
+    const fallbackCompanyInfo =
       getCompaniesForProblem(problemSlug);
+    let problemCompanies = fallbackCompanyInfo.companies;
+    let source = fallbackCompanyInfo.source;
+    let aiModel = null;
+    let aiError = null;
+    let reasoning = null;
+
+    if (source !== 'exact') {
+      try {
+        const aiCompanyInfo = await inferCompanyTagsWithGemini({
+          problemSlug,
+          fallbackCompanyTags: fallbackCompanyInfo.companies,
+        });
+
+        if (aiCompanyInfo.success && aiCompanyInfo.companyTags.length > 0) {
+          problemCompanies = aiCompanyInfo.companyTags;
+          source = 'ai';
+          aiModel = aiCompanyInfo.model;
+          reasoning = aiCompanyInfo.companyTagReasoning;
+        } else {
+          aiError = aiCompanyInfo.reason || null;
+        }
+      } catch (error) {
+        console.error('Gemini company tag inference failed:', error.message);
+        aiError = error.message;
+      }
+    }
 
     res.json({
       problem: problemSlug,
       companies: problemCompanies,
       count: problemCompanies.length,
       source,
-      inferred: source === 'inferred',
+      inferred: source === 'inferred' || source === 'ai',
+      aiModel,
+      aiError,
+      reasoning,
     });
   },
 
