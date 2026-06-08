@@ -1,0 +1,68 @@
+{
+  "two-sum": [
+    "Amazon",
+    "Google",
+    "Meta",
+    "Microsoft",
+    "Apple",
+    "Adobe"
+  ],
+  "reverse-linked-list": [
+    "Adobe",
+    "Amazon",
+    "Apple",
+    "Bloomberg",
+    "Facebook",
+    "Google"
+  ],
+  "contains-duplicate": [
+    "Amazon",
+    "Google",
+    "Microsoft",
+    "Uber",
+    "Yahoo"
+  ],
+  "valid-anagram": [
+    "Amazon",
+    "Google",
+    "Meta",
+    "Bloomberg"
+  ],
+  "best-time-to-buy-and-sell-stock": [
+    "Amazon",
+    "Google",
+    "Apple",
+    "Microsoft"
+  ],
+  "longest-substring-without-repeating-characters": [
+    "Amazon",
+    "Apple",
+    "Facebook",
+    "Google",
+    "Microsoft",
+    "Uber"
+  ],
+  "merge-k-sorted-lists": [
+    "Amazon",
+    "Google",
+    "Uber",
+    "Zenefits"
+  ],
+  "binary-search": [
+    "Amazon",
+    "Apple",
+    "Google",
+    "Microsoft"
+  ],
+  "number-of-islands": [
+    "Amazon",
+    "Google",
+    "Microsoft",
+    "Meta"
+  ],
+  "word-ladder": [
+    "Amazon",
+    "Meta",
+    "Google"
+  ]
+}
