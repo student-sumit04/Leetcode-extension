@@ -3,7 +3,18 @@ let lastPostedCode = '';
 function postEditorCode(force = false) {
   try {
     const models = window.monaco?.editor?.getModels?.() || [];
-    if (models.length === 0) return;
+    if (models.length === 0) {
+      if (force) {
+        window.postMessage(
+          {
+            type: 'LEETCODE_CODE_ERROR',
+            message: 'Code editor is not ready yet. Please wait a moment and try again.',
+          },
+          '*'
+        );
+      }
+      return;
+    }
 
     const code = models[0].getValue();
     if (!force && code === lastPostedCode) return;
@@ -28,5 +39,3 @@ window.addEventListener('message', (event) => {
     postEditorCode(true);
   }
 });
-
-setInterval(() => postEditorCode(false), 2000);
