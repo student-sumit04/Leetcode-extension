@@ -3,6 +3,32 @@ import { createRoot } from 'react-dom/client';
 import Settings from './Settings';
 import './popup.css';
 
+function getAiStatus(analysis) {
+  if (!analysis) return { unavailable: false, message: '' };
+
+  const aiDisabled = analysis.aiEnabled === false;
+  const aiError = typeof analysis.aiError === 'string' ? analysis.aiError : '';
+  const quotaReached = /quota|resource_exhausted|429/i.test(aiError);
+
+  if (aiDisabled && quotaReached) {
+    return {
+      unavailable: true,
+      message:
+        'AI is temporarily unavailable because Gemini quota is exhausted. Showing rule-based analysis instead.',
+    };
+  }
+
+  if (aiDisabled) {
+    return {
+      unavailable: true,
+      message:
+        'AI is currently unavailable. Showing rule-based analysis instead.',
+    };
+  }
+
+  return { unavailable: false, message: '' };
+}
+
 function Popup() {
   const [activeTab, setActiveTab] = useState('analysis');
   const [analysis, setAnalysis] = useState(null);
@@ -35,6 +61,8 @@ function Popup() {
       setLoading(false);
     }
   };
+
+  const aiStatus = getAiStatus(analysis);
 
   return (
     <div className="popup-container">
@@ -71,6 +99,12 @@ function Popup() {
 
             {analysis && (
               <div className="analysis-results">
+                {aiStatus.unavailable && (
+                  <div className="ai-status ai-status-warning">
+                    <strong>AI unavailable:</strong> {aiStatus.message}
+                  </div>
+                )}
+
                 <div className="result-item">
                   <label>Time Complexity:</label>
                   <span className="result-value">

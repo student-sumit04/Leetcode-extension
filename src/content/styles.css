@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* LeetCode AI Extension Styles */
+
+:root {
+  --primary: #ffa116;
+  --dark: #1f1f1f;
+  --text: #ffffff;
+}
+
+/* Analyze Button */
+#leetcode-ai-button {
+  transition: all 0.3s ease;
+}
+
+#leetcode-ai-button:active {
+  transform: scale(0.95);
+}
+
+/* Company Tags Container */
+#leetcode-ai-companies {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Complexity Display */
+#complexity-display {
+  animation: slideIn 0.3s ease-out;
+}
+
+#complexity-display p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #1f1f1f;
+  color: #ffa116;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border: 1px solid #ffa116;
+  font-size: 12px;
+}
+
+.tooltip .tooltiptext::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffa116 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
